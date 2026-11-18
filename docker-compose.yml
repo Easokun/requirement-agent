@@ -1,0 +1,44 @@
+# 打包部署（docker-compose 编排）由 deepseekv4pro 生成
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?请在 .env 里设置 MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: jigou
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      BAILIAN_API_KEY: ${BAILIAN_API_KEY:?请在 .env 里设置 BAILIAN_API_KEY}
+      BAILIAN_BASE_URL: ${BAILIAN_BASE_URL:-https://ws-snssl43i8q90cnoj.cn-beijing.maas.aliyuncs.com/compatible-mode/v1}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: jigou
+      PORT: "8000"
+      REBUILD_KB: ${REBUILD_KB:-0}
+    ports:
+      - "${APP_PORT:-80}:8000"
+    volumes:
+      - vector_store:/app/backend/vector_store
+
+volumes:
+  mysql_data:
+  vector_store:

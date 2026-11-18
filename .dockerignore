@@ -1,0 +1,14 @@
+**/__pycache__/
+**/*.pyc
+backend/.env
+backend/vector_store/
+frontend/node_modules/
+android/
+.idea/
+*.png
+generate_ppt.py
+README.md
+DEPLOY.md
+deploy.sh
+.env
+.env.example
