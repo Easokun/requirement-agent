@@ -2,6 +2,18 @@
 
 基于 LangChain + LangGraph 的智能需求分析 Agent：用户用自然语言描述项目想法，Agent 通过多轮对话澄清需求、检索知识库给出专业建议，最终自动生成一份结构化的《需求诊断报告》（支持 PDF 导出）。
 
+## 界面预览
+
+| 登录 | 需求分析入口 | 分析模式 |
+|---|---|---|
+| ![登录](docs/screenshots/01-login.png) | ![首页](docs/screenshots/02-home.png) | ![分析模式](docs/screenshots/03-analysis-mode.png) |
+
+| 标准模板库 | 需求诊断报告 | 方案对比（含预算/工期） |
+|---|---|---|
+| ![模板库](docs/screenshots/04-templates.png) | ![诊断报告](docs/screenshots/05-report-overview.png) | ![方案对比](docs/screenshots/06-plan-compare.png) |
+
+> 诊断报告示例：Agent 对"员工签到打卡小程序"需求自动产出项目概述、已具备/还缺失清单、MVP 与完整版双方案对比（预算 1~5 万 / 20~50 万，工期 3~6 周 / 8~14 周），可导出 MD / PDF / 长截图。
+
 ## 功能亮点
 
 - **Agent 工具调用**：基于 LangChain Agent Loop，LLM 可主动调用知识库检索等工具完成诊断
